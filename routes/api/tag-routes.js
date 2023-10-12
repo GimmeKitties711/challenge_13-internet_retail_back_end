@@ -38,6 +38,12 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   // create a new tag
+
+  if (!req.body.tag_name) {
+    res.status(400).json({message: 'Please provide a tag name to be added'});
+    return;
+  }
+
   Tag.create(req.body).then((tag) => {
     res.json(tag);
   }).catch((err) => {
@@ -48,6 +54,12 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
+
+  if (!req.body.tag_name) {
+    res.status(400).json({message: 'Please provide a tag name to be updated'});
+    return;
+  }
+
   Tag.update(req.body, {
     where:{
       id: req.params.id
