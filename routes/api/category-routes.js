@@ -6,7 +6,9 @@ const { Category, Product } = require('../../models');
 router.get('/', (req, res) => {
   // find all categories
   // be sure to include its associated Products
-  Category.findAll({ }).then((results) => {
+  Category.findAll({
+    include: [Product]
+  }).then((results) => {
     res.json(results);
   })
 });
@@ -33,6 +35,11 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   // create a new category
+  console.log(typeof req.body.category_name)
+  if (!req.body.category_name || typeof req.body.category_name !== 'string') {
+    res.status(400).json({message: 'Please provide a category name and format it this way (without the backslashes): {"category_name": "Jackets"}'});
+    return;
+  }
   Category.create(req.body).then((category) => {
     res.json(category);
   }).catch((err) => {
