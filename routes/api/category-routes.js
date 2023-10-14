@@ -34,10 +34,8 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  // create a new category
-  console.log(typeof req.body.category_name)
   if (!req.body.category_name || typeof req.body.category_name !== 'string') {
-    res.status(400).json({message: 'Please provide a category name and format it this way (without the backslashes): {"category_name": "Jackets"}'});
+    res.status(400).json({message: "Please provide a category name and format it this way (without the backslashes): {\"category_name\": \"Jackets\"}. Both components must be a string."});
     return;
   }
   Category.create(req.body).then((category) => {
