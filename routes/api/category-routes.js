@@ -52,7 +52,7 @@ router.put('/:id', (req, res) => {
       id: req.params.id
     },
   }).then((category) => {
-    if (!category[0]) { // category is an object, either [1] (successful) or [0] (unsuccessful). category[0] is the value of the first element in the array, which is either the number 1 or 0. extracting the number from the array makes the if condition valid and allows us to check if the update was successful or not.
+    if (!category[0]) { // in the put route, category is an object, either [1] (successful) or [0] (unsuccessful). category[0] is the value of the first element in the array, which is either the number 1 or 0. extracting the number from the array makes the if condition valid and allows us to check if the update was successful or not.
       res.status(404).json({message: "No category found with this id"});
       return;
     }

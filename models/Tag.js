@@ -15,6 +15,7 @@ Tag.init(
     },
     tag_name: {
       type: DataTypes.STRING,
+      allowNull: false, // tag name cannot be null. even though this was not specified in the challenge instructions, it makes sense to me.
     },
   },
   {
