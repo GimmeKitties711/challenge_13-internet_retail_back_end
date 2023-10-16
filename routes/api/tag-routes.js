@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
     res.json(results);
   }).catch((err) => {
     console.log(err);
-    res.status(400);
+    res.status(400).json(err);
   })
 });
 
@@ -32,33 +32,23 @@ router.get('/:id', (req, res) => {
     res.json(tag);
   }).catch((err) => {
     console.log(err);
-    res.status(400);
+    res.status(400).json(err);
   })
 });
 
 router.post('/', (req, res) => {
   // create a new tag
 
-  if (!req.body.tag_name) {
-    res.status(400).json({message: 'Please provide a tag name to be added'});
-    return;
-  }
-
   Tag.create(req.body).then((tag) => {
     res.json(tag);
   }).catch((err) => {
     console.log(err);
-    res.status(400);
+    res.status(400).json(err);
   })
 });
 
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
-
-  if (!req.body.tag_name) {
-    res.status(400).json({message: 'Please provide a tag name to be updated'});
-    return;
-  }
 
   Tag.update(req.body, {
     where:{
@@ -72,7 +62,7 @@ router.put('/:id', (req, res) => {
     res.json(tag);
   }).catch((err) => {
     console.log(err);
-    res.status(500);
+    res.status(400).json(err);
   })
 });
 
@@ -89,8 +79,8 @@ router.delete('/:id', (req, res) => {
     }    
     res.json(tag);
   }).catch((err) => {
-    console.log('Connection Error -> ', err);
-    res.status(500).json(err);
+    console.log(err);
+    res.status(400).json(err);
   })
 });
 

@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
     res.json(results);
   }).catch((err) => {
     console.log(err);
-    res.status(400);
+    res.status(400).json(err);
   })
 });
 
@@ -22,27 +22,28 @@ router.get('/:id', (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
 
-  console.log('Id --> ',req.params.id);
-
   Product.findOne({
     where: {
       id: req.params.id
     },
     attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
     include: [{
-      model:Category,
+      model: Category,
       attributes:['id','category_name']
     }, 
-    {model:Tag, attributes:['id','tag_name']}]
+    {
+      model: Tag,
+      attributes:['id','tag_name']
+    }]
   }).then((product) => {
     if (!product) {
-      res.status(404).json({message: 'No product found with this id'});
+      res.status(404).json({message: "No product found with this id"});
       return; 
     }
     res.json(product)
   }).catch((err) => {
     console.log(err);
-    res.status(400);
+    res.status(400).json(err);
   })
 });
 
@@ -53,9 +54,11 @@ router.post('/', (req, res) => {
       product_name: "Basketball",
       price: 200.00,
       stock: 3,
+      category_id: 5,
       tagIds: [1, 2, 3, 4]
     }
   */
+  
   Product.create(req.body)
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
@@ -115,8 +118,8 @@ router.put('/:id', (req, res) => {
     })
     .then((updatedProductTags) => res.json(updatedProductTags))
     .catch((err) => {
-      // console.log(err);
-      res.status(400).json({message: "Something went wrong with your request. Make sure that you include a JSON body and that the body is formatted correctly."});
+      console.log(err);
+      res.status(400).json(err);
     });
 });
 
@@ -128,13 +131,13 @@ router.delete('/:id', (req, res) => {
     }
   }).then((product) => {
     if (!product) {
-      res.status(404).json({message: 'No product found with this id'});
+      res.status(404).json({message: "No product found with this id"});
       return; 
     }
     res.json(product);
   }).catch((err) => {
     console.log(err);
-    res.status(400);
+    res.status(400).json(err);
   })
 });
 
