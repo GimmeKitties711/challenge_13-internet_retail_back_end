@@ -25,9 +25,9 @@ router.get('/:id', (req, res) => {
     },
     include: [Product]
   }).then((category) => {
-    if (!category) { // if there is no category associated with the id, return an error
+    if (!category) { // if there is no category associated with the id, return a 404 error
       res.status(404).json({message: "No category found with this id"});
-      return; 
+      return;
     }
     res.json(category);
   }).catch((err) => {
@@ -52,7 +52,7 @@ router.put('/:id', (req, res) => {
       id: req.params.id
     },
   }).then((category) => {
-    if (!category[0]) { // in the put route, category is an object, either [1] (successful) or [0] (unsuccessful). category[0] is the value of the first element in the array, which is either the number 1 or 0. extracting the number from the array makes the if condition valid and allows us to check if the update was successful or not.
+    if (!category[0]) { // in the put route, category is an object, either [1] (successful) or [0] (unsuccessful). category[0] is the value of the first element of the array, which is either the number 1 or 0. extracting the number from the array makes the if condition valid and allows us to check if the update was successful.
       res.status(404).json({message: "No category found with this id"});
       return;
     }
@@ -66,13 +66,13 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   // delete a category by its `id` value
   Category.destroy({
-    where: { 
+    where: {
       id: req.params.id
     }
   }).then((category) => {
     if (!category) {
       res.status(404).json({message: "No category found with this id"});
-      return; 
+      return;
     }
     res.json(category);
   }).catch((err) => {

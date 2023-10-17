@@ -30,15 +30,15 @@ router.get('/:id', (req, res) => {
     include: [{
       model: Category,
       attributes: ['id', 'category_name'],
-    }, 
+    },
     {
       model: Tag,
       attributes: ['id', 'tag_name'],
     }]
   }).then((product) => {
-    if (!product) { // if there is no product associated with the id, return an error
+    if (!product) { // if there is no product associated with the id, return a 404 error
       res.status(404).json({message: "No product found with this id"});
-      return; 
+      return;
     }
     res.json(product);
   }).catch((err) => {
@@ -60,7 +60,7 @@ router.post('/', (req, res) => {
       // last field cannot end with a trailing comma, source: https://udn.realityripple.com/docs/Web/JavaScript/Reference/Errors/JSON_bad_parse
     }
   */
-  
+
   Product.create(req.body)
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
@@ -128,13 +128,13 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
   Product.destroy({
-    where: { 
+    where: {
       id: req.params.id
     }
   }).then((product) => {
     if (!product) {
       res.status(404).json({message: "No product found with this id"});
-      return; 
+      return;
     }
     res.json(product);
   }).catch((err) => {
