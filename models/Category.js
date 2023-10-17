@@ -22,7 +22,7 @@ Category.init(
   {
     sequelize,
     timestamps: false,
-    freezeTableName: true,
+    freezeTableName: true, // this prevents the table name from being the plural of Category, source: https://sequelize.org/docs/v7/models/naming-strategies/
     underscored: true,
     modelName: 'category',
   }
