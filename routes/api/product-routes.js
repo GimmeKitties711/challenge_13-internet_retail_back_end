@@ -29,18 +29,18 @@ router.get('/:id', (req, res) => {
     attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
     include: [{
       model: Category,
-      attributes:['id','category_name']
+      attributes: ['id', 'category_name'],
     }, 
     {
       model: Tag,
-      attributes:['id','tag_name']
+      attributes: ['id', 'tag_name'],
     }]
   }).then((product) => {
-    if (!product) {
+    if (!product) { // if there is no product associated with the id, return an error
       res.status(404).json({message: "No product found with this id"});
       return; 
     }
-    res.json(product)
+    res.json(product);
   }).catch((err) => {
     console.log(err);
     res.status(400).json(err);
@@ -51,11 +51,13 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   /* req.body should look like this...
     {
-      product_name: "Basketball",
-      price: 200.00,
-      stock: 3,
-      category_id: 5,
-      tagIds: [1, 2, 3, 4]
+      product_name: "Basketball", // cannot be null
+      price: 200.00, // cannot be null
+      stock: 3, // can be null because default is 10
+      category_id: 5, // can be null
+      tagIds: [1, 2, 3, 4] // can be null
+
+      // last field cannot end with a trailing comma, source: https://udn.realityripple.com/docs/Web/JavaScript/Reference/Errors/JSON_bad_parse
     }
   */
   

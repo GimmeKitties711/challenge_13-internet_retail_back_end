@@ -25,7 +25,7 @@ router.get('/:id', (req, res) => {
     },
     include: [Product]
   }).then((tag) => {
-    if (!tag) {
+    if (!tag) { // if there is no tag associated with the id, return an error
       res.status(404).json({message: 'No tag found with this id'});
       return; 
     }
@@ -56,7 +56,6 @@ router.put('/:id', (req, res) => {
     }
   }).then((tag) => {
     if (!tag[0]) { // in the put route, tag is an object, either [1] (successful) or [0] (unsuccessful). tag[0] is the value of the first element in the array, which is either the number 1 or 0. extracting the number from the array makes the if condition valid and allows us to check if the update was successful or not.
-      console.log('tag not found');
       res.status(404).json({message: 'No tag found with this id'});
       return;
     }
