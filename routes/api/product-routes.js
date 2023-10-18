@@ -51,11 +51,11 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   /* req.body should look like this...
     {
-      product_name: "Basketball", // cannot be null
-      price: 200.00, // cannot be null
-      stock: 3, // can be null because default is 10
-      category_id: 5, // can be null
-      tagIds: [1, 2, 3, 4] // can be null
+      "product_name": "Basketball", // cannot be null
+      "price": 200.00, // cannot be null
+      "stock": 3, // can be null because default is 10
+      "category_id": 5, // can be null
+      "tagIds": [1, 2, 3, 4] // can be null
 
       // last field cannot end with a trailing comma, source: https://udn.realityripple.com/docs/Web/JavaScript/Reference/Errors/JSON_bad_parse
     }
